@@ -6,14 +6,18 @@
 #include "Connection.h"
 #include "Interface.h"
 
+void startApplication() {
+	Interface* start = new Interface;
+
+	start->displayMain();
+	start->displayMenu();
+	start->displayPreview();
+	start->processingEvent();
+	delete start;
+}
+
 int main(int argc, char** args)
 {
-	Interface* interface = new Interface;
-	Interface* interface1 = new Interface;
-	
-	interface->displayMain();
-	interface1->displayMenu();
-
-	delete interface;
+	startApplication();
 	return 0;
 }
