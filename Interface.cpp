@@ -16,3 +16,12 @@ void Interface::displayMain() {
 	eventProcessing(windowMain);
 }
 
+void Interface::displayMenu() {
+	createWindow(windowMenu, "Menu", 0, 35, 360, 820);
+	/*createRenderer(windowMenu, rendererMenu);
+
+	SDL_SetRenderDrawColor(rendererMenu, 173, 216, 230, 255);
+	SDL_RenderClear(rendererMenu);
+	SDL_RenderPresent(rendererMenu);
+	eventProcessing(windowMenu);*/
+}

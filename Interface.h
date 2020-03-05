@@ -18,15 +18,15 @@ class Interface : public ConnectionSDL {
 
 public:
 	void displayMain();
+	void displayMenu();
 	
-	//void eventProcessing(SDL_Window* &window);
-//private:
+private:
 	SDL_Window* windowMenu = nullptr;
 	SDL_Window* windowMain = nullptr;
 	SDL_Window* windowPreview = nullptr;
 	SDL_Renderer* rendererMenu = nullptr;
 	SDL_Renderer* rendererMain = nullptr;
 	SDL_Renderer* rendererPreview = nullptr;
-	//Interface* connect;
 	SDL_Rect rectMain;
+	SDL_Rect rectMenu;
 };

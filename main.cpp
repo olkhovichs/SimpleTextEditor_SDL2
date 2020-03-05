@@ -6,16 +6,14 @@
 #include "Connection.h"
 #include "Interface.h"
 
-
-
 int main(int argc, char** args)
 {
-	ConnectionSDL* connect = new ConnectionSDL;
 	Interface* interface = new Interface;
+	Interface* interface1 = new Interface;
 	
 	interface->displayMain();
+	interface1->displayMenu();
 
-	delete connect;
-
+	delete interface;
 	return 0;
 }
