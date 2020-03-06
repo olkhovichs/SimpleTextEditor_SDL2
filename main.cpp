@@ -8,9 +8,8 @@
 
 void startApplication() {
 	Interface* start = new Interface;
-
-	start->displayMain();
 	start->displayMenu();
+	start->displayMain();
 	start->displayPreview();
 	start->processingEvent();
 	delete start;

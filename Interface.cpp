@@ -35,6 +35,7 @@ void Interface::displayPreview() {
 	SDL_SetRenderDrawColor(rendererMenu, 238, 130, 238, 255); // фон
 	SDL_RenderClear(rendererMenu);
 	SDL_RenderPresent(rendererMenu);
+	SDL_Delay(3000);
 }
 
 void Interface::processingEvent() {
@@ -44,22 +45,14 @@ void Interface::processingEvent() {
 				run = false;
 			}
 			if (event.type == SDL_KEYDOWN) {
-				if (event.key.keysym.sym == SDLK_ESCAPE) {
-					SDL_DestroyWindow(windowMain);
-					//SDL_DestroyWindow(windowMenu);
-					run = false;
-				}
-			}
-			if (event.type == SDL_KEYDOWN) {
-				if (event.key.keysym.sym == SDLK_e) {
+				/*if (event.key.keysym.sym == SDLK_TAB) {
 					SDL_DestroyWindow(windowPreview);
-					//SDL_DestroyWindow(windowMenu);
-					//run = false;
+				}*/
+				if (event.key.keysym.sym == SDLK_ESCAPE) {
+					//SDL_DestroyWindow(windowPreview);
+					run = false;
 				}
 			}
 		}
 	}
 }
-
-
-
