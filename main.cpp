@@ -1,7 +1,7 @@
 #include <iostream>
 
 #include <SDL.h>
-#include <SDL_ttf.h>
+//#include <SDL_ttf.h>
 
 #include "Connection.h"
 #include "Interface.h"

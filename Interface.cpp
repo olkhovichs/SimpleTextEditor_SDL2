@@ -1,14 +1,14 @@
-#include <SDL.h>
-#include <SDL_ttf.h>
+﻿#include <SDL.h>
+//#include <SDL_ttf.h>
 
 #include "Interface.h"
 
 void Interface::displayMain() {
 	createWindow(windowMain, "Main", 360, 35, 1080, 820);
 	createRenderer(windowMain, rendererMain);
-	SDL_SetRenderDrawColor(rendererMain, 173, 216, 230, 255); // ���
+	SDL_SetRenderDrawColor(rendererMain, 173, 216, 230, 255); // фон
 	SDL_RenderClear(rendererMain);
-	SDL_SetRenderDrawColor(rendererMain, 255, 255, 255, 255); // ����� ����
+	SDL_SetRenderDrawColor(rendererMain, 255, 255, 255, 255); // белый лист
 	rectMain = { 240, 0, 600, 820 };
 	SDL_RenderFillRect(rendererMain, &rectMain);
 	SDL_RenderPresent(rendererMain);
@@ -17,7 +17,7 @@ void Interface::displayMain() {
 void Interface::displayMenu() {
 	createWindow(windowMenu, "Menu", 0, 35, 360, 820);
 	createRenderer(windowMenu, rendererMenu);
-	SDL_SetRenderDrawColor(rendererMenu, 173, 216, 230, 255); // ���
+	SDL_SetRenderDrawColor(rendererMenu, 173, 216, 230, 255); // фон
 	SDL_RenderClear(rendererMenu);
 	//SDL_RenderPresent(rendererMenu);
 	for (int i = 0; i < 600; i += 272) {
@@ -32,26 +32,28 @@ void Interface::displayMenu() {
 void Interface::displayPreview() {
 	createWindow(windowMenu, "Preview", 470, 285, 500, 250);
 	createRenderer(windowMenu, rendererMenu);
-	SDL_SetRenderDrawColor(rendererMenu, 238, 130, 238, 255); // ���
+	SDL_SetRenderDrawColor(rendererMenu, 238, 130, 238, 255); // фон
 	SDL_RenderClear(rendererMenu);
 	SDL_RenderPresent(rendererMenu);
-	SDL_Delay(3000);
 }
 
 void Interface::processingEvent() {
-	while (run) {
-		while (SDL_PollEvent(&event) != 0) {
-			if (event.type == SDL_QUIT) {
+	while (run) { // пока работает 
+		while (SDL_PollEvent(&event)) { // если что-то произошло
+			switch (event.type) { // смотрим что за событие
+			case SDL_QUIT:
 				run = false;
-			}
-			if (event.type == SDL_KEYDOWN) {
-				/*if (event.key.keysym.sym == SDLK_TAB) {
-					SDL_DestroyWindow(windowPreview);
-				}*/
-				if (event.key.keysym.sym == SDLK_ESCAPE) {
-					//SDL_DestroyWindow(windowPreview);
+				break;
+			case SDL_KEYDOWN:
+				switch (event.key.keysym.sym) {
+				case SDLK_ESCAPE:
 					run = false;
+					//SDL_DestroyWindow(windowPreview);
+					break;
+				default:
+					break;
 				}
+				break;
 			}
 		}
 	}

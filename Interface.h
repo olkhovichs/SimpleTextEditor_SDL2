@@ -1,7 +1,7 @@
 #pragma once
 
 #include <SDL.h>
-#include <SDL_ttf.h>
+//#include <SDL_ttf.h>
 
 #include "Connection.h"
 
@@ -14,6 +14,7 @@ struct Color {
 	SDL_Color yellow = { 255, 255, 0 };
 	SDL_Color lightBlue = { 173, 216, 230 };
 };
+//Color* color = new Color;
 
 class Interface : public ConnectionSDL {
 
@@ -36,4 +37,7 @@ private:
 	SDL_Renderer* rendererPreview = nullptr;
 	SDL_Rect rectMain;
 	SDL_Rect rectMenu;
+	//SDL_Rect rectText;
+	//TTF_Font* textPreview = TTF_OpenFont("preview.ttf", 24);
+	//SDL_Surface* surfaceMessage = TTF_RenderText_Solid(textPreview, "привет", color->red);
 };

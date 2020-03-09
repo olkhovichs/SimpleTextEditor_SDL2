@@ -16,7 +16,7 @@ int ConnectionSDL::createWindow(SDL_Window* &window, const char* name, int x, in
 	}
 }
 
-int ConnectionSDL::createRenderer(SDL_Window* &window, SDL_Renderer* &renderer) {
+int ConnectionSDL::createRenderer(SDL_Window*& window, SDL_Renderer* &renderer) {
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 
 	if (renderer == nullptr) {
@@ -24,3 +24,8 @@ int ConnectionSDL::createRenderer(SDL_Window* &window, SDL_Renderer* &renderer) 
 		return 3;
 	}
 }
+
+/*void ConnectionSDL::quitSDL(SDL_Window*& window) {
+	SDL_DestroyWindow(window);
+	SDL_Quit();
+}*/
