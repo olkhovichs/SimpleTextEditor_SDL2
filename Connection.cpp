@@ -29,3 +29,16 @@ int ConnectionSDL::createRenderer(SDL_Window*& window, SDL_Renderer* &renderer) 
 	SDL_DestroyWindow(window);
 	SDL_Quit();
 }*/
+
+int ConnectionSDL::outText(SDL_Renderer*& renderer, const char* message, const char* styleText,
+					int size, SDL_Color color, SDL_Rect rect) {
+	if (TTF_Init() == -1) {
+		std::cout << "SDL_TTF_Init Error: " << TTF_GetError() << std::endl;
+		return 4;
+	}
+
+	font = TTF_OpenFont(styleText, size);
+	surfaceMessage = TTF_RenderText_Solid(font, message, color);
+	textureText = SDL_CreateTextureFromSurface(renderer, surfaceMessage);
+	SDL_RenderCopy(renderer, textureText, NULL, &rect);
+}

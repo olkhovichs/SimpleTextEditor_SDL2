@@ -1,5 +1,5 @@
 ﻿#include <SDL.h>
-//#include <SDL_ttf.h>
+#include <SDL_ttf.h>
 
 #include "Interface.h"
 
@@ -31,10 +31,12 @@ void Interface::displayMenu() {
 
 void Interface::displayPreview() {
 	createWindow(windowMenu, "Preview", 470, 285, 500, 250);
-	createRenderer(windowMenu, rendererMenu);
-	SDL_SetRenderDrawColor(rendererMenu, 238, 130, 238, 255); // фон
-	SDL_RenderClear(rendererMenu);
-	SDL_RenderPresent(rendererMenu);
+	createRenderer(windowMenu, rendererPreview);
+	SDL_SetRenderDrawColor(rendererPreview, 255, 182, 193, 255); // фон
+	SDL_RenderClear(rendererPreview);
+	rectText = { 0, 0, 50, 50 };
+	outText(rendererPreview, "privet", "preview.ttf", 20, { 255, 0, 0 }, rectText);
+	SDL_RenderPresent(rendererPreview);
 }
 
 void Interface::processingEvent() {

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <SDL.h>
-//#include <SDL_ttf.h>
+#include <SDL_ttf.h>
 
 #include "Connection.h"
 
@@ -37,7 +37,5 @@ private:
 	SDL_Renderer* rendererPreview = nullptr;
 	SDL_Rect rectMain;
 	SDL_Rect rectMenu;
-	//SDL_Rect rectText;
-	//TTF_Font* textPreview = TTF_OpenFont("preview.ttf", 24);
-	//SDL_Surface* surfaceMessage = TTF_RenderText_Solid(textPreview, "привет", color->red);
+	SDL_Rect rectText;
 };
