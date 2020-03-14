@@ -14,7 +14,6 @@ struct Color {
 	SDL_Color yellow = { 255, 255, 0 };
 	SDL_Color lightBlue = { 173, 216, 230 };
 };
-//Color* color = new Color;
 
 class Interface : public ConnectionSDL {
 
@@ -22,11 +21,16 @@ public:
 	
 	SDL_Event event;
 	bool run = true;
+	TTF_Font* font;
+	SDL_Surface* surfaceMessage;
+	SDL_Texture* textureText;
 
 	void displayMain();
 	void displayMenu();
 	void displayPreview();
 	void processingEvent();
+	int outText(SDL_Renderer*& renderer, const char* message, const char* styleText,
+		int size, SDL_Color color, SDL_Rect rect);
 
 private:
 	SDL_Window* windowMenu = nullptr;
@@ -37,5 +41,4 @@ private:
 	SDL_Renderer* rendererPreview = nullptr;
 	SDL_Rect rectMain;
 	SDL_Rect rectMenu;
-	SDL_Rect rectText;
 };

@@ -10,7 +10,7 @@ void startApplication() {
 	Interface* start = new Interface;
 	start->displayMenu();
 	start->displayMain();
-	start->displayPreview();
+	//start->displayPreview();
 	start->processingEvent();
 	delete start;
 }
