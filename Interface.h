@@ -5,7 +5,7 @@
 
 #include "Connection.h"
 
-struct Color {
+struct Color { // переписать структуру
 	SDL_Color black = { 0, 0, 0 };
 	SDL_Color white = { 255, 255, 255 };
 	SDL_Color red = { 255, 0, 0 };
@@ -31,6 +31,7 @@ public:
 	void processingEvent();
 	int outText(SDL_Renderer*& renderer, const char* message, const char* styleText,
 		int size, SDL_Color color, SDL_Rect rect);
+	void inputText(SDL_Renderer*& renderer, const char* styleText, int size, SDL_Color color, SDL_Rect rect);
 
 private:
 	SDL_Window* windowMenu = nullptr;

@@ -8,7 +8,7 @@
 
 void startApplication() {
 	Interface* start = new Interface;
-	start->displayMenu();
+	//start->displayMenu();
 	start->displayMain();
 	//start->displayPreview();
 	start->processingEvent();

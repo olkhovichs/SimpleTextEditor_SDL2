@@ -2,7 +2,6 @@
 
 #include <SDL.h>
 #include <SDL_ttf.h>
-
 #include "Interface.h"
 
 void Interface::displayMain() {
@@ -13,7 +12,63 @@ void Interface::displayMain() {
 	SDL_SetRenderDrawColor(rendererMain, 255, 255, 255, 255); // белый лист
 	rectMain = { 240, 0, 600, 820 };
 	SDL_RenderFillRect(rendererMain, &rectMain);
+	//SDL_RenderPresent(rendererMain);
+	SDL_StartTextInput();
+	inputText(rendererMain, "sans.ttf", 100, { 0, 0, 0 }, { 50, 10, 250, 100 });
+	SDL_StopTextInput();
 	SDL_RenderPresent(rendererMain);
+}
+
+void Interface::inputText(SDL_Renderer*& renderer, const char* styleText, int size, SDL_Color color, SDL_Rect rect) {
+	if (TTF_Init() == -1) {
+		std::cout << "SDL_TTF_Init Error: " << TTF_GetError() << std::endl;
+	}
+	std::string m = "Hello";
+	bool quit = false;
+	SDL_Event e;
+	TTF_Font* font1 = TTF_OpenFont(styleText, size);
+	SDL_Surface* surface1 = TTF_RenderUTF8_Solid(font1, m.c_str(), color);
+	SDL_Texture* texture1 = SDL_CreateTextureFromSurface(renderer, surface1);
+	
+	while (!quit) {
+		bool renderText = false;
+		while (SDL_PollEvent(&e) != 0) {
+			if (e.type == SDL_KEYDOWN) {
+				if (e.key.keysym.sym == SDLK_BACKSPACE && m.length() > 0) {
+					m.pop_back();
+					renderText = true;
+				}
+				else if (e.key.keysym.sym == SDLK_c && SDL_GetModState() & KMOD_CTRL) {
+					SDL_SetClipboardText(m.c_str());
+				}
+				else if (e.key.keysym.sym == SDLK_v && SDL_GetModState() & KMOD_CTRL) {
+					m = SDL_GetClipboardText();
+					renderText = true;
+				}
+			}
+			if (e.type == SDL_TEXTINPUT) {
+				if (!(SDL_GetModState() & KMOD_CTRL && (e.text.text[0] == 'c' || e.text.text[0] == 'C' || e.text.text[0] == 'v' || e.text.text[0] == 'V'))) {
+					m += e.text.text;
+					renderText = true;
+				}
+			}
+		}
+		if (renderText) {
+			if (m != "") {
+				SDL_Surface* surface1 = TTF_RenderUTF8_Solid(font1, m.c_str(), color);
+				SDL_Texture* texture1 = SDL_CreateTextureFromSurface(renderer, surface1);
+			}
+			else {
+				m = " ";
+				SDL_Surface* surface1 = TTF_RenderUTF8_Solid(font1, m.c_str(), color);
+				SDL_Texture* texture1 = SDL_CreateTextureFromSurface(renderer, surface1);
+			}
+		}
+		SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+		SDL_RenderClear(renderer);
+		SDL_RenderCopy(renderer, texture1, NULL, &rect);
+		SDL_RenderPresent(renderer);
+	}
 }
 
 void Interface::displayMenu() {
@@ -78,5 +133,5 @@ int Interface::outText(SDL_Renderer*& renderer, const char* message, const char*
 	font = TTF_OpenFont(styleText, size);
 	surfaceMessage = TTF_RenderUTF8_Solid(font, message, color);
 	textureText = SDL_CreateTextureFromSurface(renderer, surfaceMessage);
-	SDL_RenderCopy(renderer, textureText, NULL, &rect); // перепискать с blitsurface
+	SDL_RenderCopy(renderer, textureText, NULL, &rect); 
 }
