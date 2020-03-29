@@ -11,7 +11,7 @@ void startApplication() {
 	//start->displayMenu();
 	start->displayMain();
 	//start->displayPreview();
-	start->processingEvent();
+	//start->processingEvent();
 	delete start;
 }
 

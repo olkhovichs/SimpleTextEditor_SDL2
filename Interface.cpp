@@ -16,14 +16,13 @@ void Interface::displayMain() {
 	SDL_StartTextInput();
 	inputText(rendererMain, "sans.ttf", 100, { 0, 0, 0 }, { 50, 10, 250, 100 });
 	SDL_StopTextInput();
-	SDL_RenderPresent(rendererMain);
 }
 
 void Interface::inputText(SDL_Renderer*& renderer, const char* styleText, int size, SDL_Color color, SDL_Rect rect) {
 	if (TTF_Init() == -1) {
 		std::cout << "SDL_TTF_Init Error: " << TTF_GetError() << std::endl;
 	}
-	std::string m = "Hello";
+	std::string m = "H";
 	bool quit = false;
 	SDL_Event e;
 	TTF_Font* font1 = TTF_OpenFont(styleText, size);
@@ -55,13 +54,13 @@ void Interface::inputText(SDL_Renderer*& renderer, const char* styleText, int si
 		}
 		if (renderText) {
 			if (m != "") {
-				SDL_Surface* surface1 = TTF_RenderUTF8_Solid(font1, m.c_str(), color);
-				SDL_Texture* texture1 = SDL_CreateTextureFromSurface(renderer, surface1);
+				surface1 = TTF_RenderUTF8_Solid(font1, m.c_str(), color);
+				texture1 = SDL_CreateTextureFromSurface(renderer, surface1);
 			}
 			else {
 				m = " ";
-				SDL_Surface* surface1 = TTF_RenderUTF8_Solid(font1, m.c_str(), color);
-				SDL_Texture* texture1 = SDL_CreateTextureFromSurface(renderer, surface1);
+				surface1 = TTF_RenderUTF8_Solid(font1, m.c_str(), color);
+				texture1 = SDL_CreateTextureFromSurface(renderer, surface1);
 			}
 		}
 		SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
