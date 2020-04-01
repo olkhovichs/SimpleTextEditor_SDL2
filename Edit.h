@@ -11,7 +11,6 @@
 #include "Interface.h"
 
 class Edit : public Interface {
-
 public:
 
 	//std::vector<std::string> mainBuffer;

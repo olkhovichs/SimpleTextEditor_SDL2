@@ -7,12 +7,13 @@
 #include "Interface.h"
 
 void startApplication() {
-	Interface* start = new Interface;
-	//start->displayMenu();
-	start->displayMain();
-	//start->displayPreview();
-	//start->processingEvent();
-	delete start;
+	Interface* startInterface = new Interface;
+	ConnectionSDL* startConnect = new ConnectionSDL;
+	//startInterface->displayMenu();
+	startInterface->displayMain();
+	//startInterface->displayPreview();
+	startConnect->processingEvent();
+	delete startInterface;
 }
 
 int main(int argc, char** args)

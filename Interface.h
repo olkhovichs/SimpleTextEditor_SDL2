@@ -18,20 +18,9 @@ struct Color { // переписать структуру
 class Interface : public ConnectionSDL {
 
 public:
-	
-	SDL_Event event;
-	bool run = true;
-	TTF_Font* font;
-	SDL_Surface* surfaceMessage;
-	SDL_Texture* textureText;
-
 	void displayMain();
 	void displayMenu();
 	void displayPreview();
-	void processingEvent();
-	int outText(SDL_Renderer*& renderer, const char* message, const char* styleText,
-		int size, SDL_Color color, SDL_Rect rect);
-	void inputText(SDL_Renderer*& renderer, const char* styleText, int size, SDL_Color color, SDL_Rect rect);
 
 private:
 	SDL_Window* windowMenu = nullptr;
