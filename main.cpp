@@ -12,7 +12,7 @@ void startApplication() {
 	//startInterface->displayMenu();
 	startInterface->displayMain();
 	//startInterface->displayPreview();
-	startConnect->processingEvent();
+	startInterface->processingEvent();
 	delete startInterface;
 }
 

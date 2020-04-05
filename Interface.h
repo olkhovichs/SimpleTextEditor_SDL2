@@ -1,11 +1,9 @@
 #pragma once
 
-#include <SDL.h>
-#include <SDL_ttf.h>
-
 #include "Connection.h"
+#include "Text.h"
 
-struct Color { // переписать структуру
+struct Color { 
 	SDL_Color black = { 0, 0, 0 };
 	SDL_Color white = { 255, 255, 255 };
 	SDL_Color red = { 255, 0, 0 };
@@ -13,14 +11,20 @@ struct Color { // переписать структуру
 	SDL_Color green = { 0, 128, 0 };
 	SDL_Color yellow = { 255, 255, 0 };
 	SDL_Color lightBlue = { 173, 216, 230 };
+	SDL_Color azure = { 240, 255, 255 };
 };
 
-class Interface : public ConnectionSDL {
+class Interface : public ConnectionSDL, public Text {
 
 public:
 	void displayMain();
 	void displayMenu();
 	void displayPreview();
+	void processingEvent();
+
+	bool run = true;
+	SDL_Event event;
+	bool runText;
 
 private:
 	SDL_Window* windowMenu = nullptr;

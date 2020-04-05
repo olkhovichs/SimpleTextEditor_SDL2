@@ -2,6 +2,7 @@
 
 #include <SDL.h>
 #include <SDL_ttf.h>
+
 #include "Interface.h"
 
 void Interface::displayMain() {
@@ -13,35 +14,88 @@ void Interface::displayMain() {
 	rectMain = { 240, 0, 600, 820 };
 	SDL_RenderFillRect(rendererMain, &rectMain);
 	SDL_RenderPresent(rendererMain);
-	//inputText(rendererMain, "sans.ttf", 30, { 0, 0, 0 }, { 0, 0, 1080, 820 });
+	inputText("preview.ttf");
 }
 
-/*void Interface::displayMenu() {
+void Interface::displayMenu() {
+	Color* color = new Color;
 	createWindow(windowMenu, "Menu", 0, 35, 360, 820);
 	createRenderer(windowMenu, rendererMenu);
 	SDL_SetRenderDrawColor(rendererMenu, 173, 216, 230, 255); // фон
 	SDL_RenderClear(rendererMenu);
-	//SDL_RenderPresent(rendererMenu);
 	for (int i = 0; i < 600; i += 272) {
 		SDL_SetRenderDrawColor(rendererMenu, 135, 206, 235, 255);
 		rectMenu = { 0, i, 360, 136 };
 		SDL_RenderFillRect(rendererMenu, &rectMenu);
 		
 	}
-	outText(rendererMenu, "Insert", "sans.ttf", 100, { 240, 255, 255 }, 50, 10, 20, 100);
-	outText(rendererMenu, "Copy", "sans.ttf", 100, { 240, 255, 255 }, 50, 10, 20, 100);
-	outText(rendererMenu, "Cut", "sans.ttf", 100, { 240, 255, 255 }, 50, 10, 20, 100);
-	outText(rendererMenu, "Save", "sans.ttf", 100, { 240, 255, 255 }, 50, 10, 20, 100);
-	outText(rendererMenu, "Exit", "sans.ttf", 100, { 240, 255, 255 }, 50, 10, 20, 100);
-	outText(rendererMenu, "About", "sans.ttf", 100, { 240, 255, 255 }, 50, 10, 20, 100);
+	outText(rendererMenu, "Insert", "sans.ttf", 100, color->azure, 50, 10);
+	outText(rendererMenu, "Copy", "sans.ttf", 100, color->azure, 50, 10);
+	outText(rendererMenu, "Cut", "sans.ttf", 100, color->azure, 50, 10);
+	outText(rendererMenu, "Save", "sans.ttf", 100, color->azure, 50, 10);
+	outText(rendererMenu, "Exit", "sans.ttf", 100, color->azure, 50, 10);
+	outText(rendererMenu, "About", "sans.ttf", 100, color->azure, 50, 10);
 	SDL_RenderPresent(rendererMenu);
 }
 
 void Interface::displayPreview() {
+	Color* color = new Color;
 	createWindow(windowPreview, "Preview", 470, 285, 500, 250);
 	createRenderer(windowPreview, rendererPreview);
 	SDL_SetRenderDrawColor(rendererPreview, 255, 182, 193, 255); // фон
 	SDL_RenderClear(rendererPreview);
-	outText(rendererPreview, "The simple text editor. olhovich", "preview.ttf", 80, { 0, 0, 255 }, { 0, 0, 500, 80 }); 
+	outText(rendererPreview, "The simple text editor. olhovich", "preview.ttf", 80, color->blue, 0, 0); 
 	SDL_RenderPresent(rendererPreview);
-}*/
+}
+
+void Interface::processingEvent() {
+	Color* color = new Color;
+	while (run) {
+		runText = false;
+		while (SDL_PollEvent(&event)) {
+			if (event.type == SDL_KEYDOWN) {
+				if (event.key.keysym.sym == SDLK_ESCAPE) {
+					run = false;
+				}
+				if (event.key.keysym.sym == SDLK_BACKSPACE && mainBuffer.length() > 0) { // проверка на пустоту
+					mainBuffer.pop_back();
+					runText = true;
+				}
+				else if (event.key.keysym.sym == SDLK_c && SDL_GetModState() & KMOD_CTRL) {
+					SDL_SetClipboardText(mainBuffer.c_str());
+				}
+				else if (event.key.keysym.sym == SDLK_v && SDL_GetModState() & KMOD_CTRL) {
+					mainBuffer = SDL_GetClipboardText();
+					runText = true;
+				}
+			}
+			if (event.type == SDL_TEXTINPUT) {
+				if (!(SDL_GetModState() & KMOD_CTRL && (event.text.text[0] == 'c' || event.text.text[0] == 'C' || event.text.text[0] == 'v' || event.text.text[0] == 'V'))) {
+					mainBuffer += event.text.text;
+					runText = true;
+				}
+			}
+		}
+		if (runText) {
+			if (mainBuffer != "") {
+				surfaceInputText = TTF_RenderUTF8_Solid(fontInput, mainBuffer.c_str(), color->black);
+				textureInputText = SDL_CreateTextureFromSurface(rendererMain, surfaceInputText);
+			}
+			else { // ???
+				mainBuffer = " ";
+				surfaceInputText = TTF_RenderUTF8_Solid(fontInput, mainBuffer.c_str(), color->black);
+				textureInputText = SDL_CreateTextureFromSurface(rendererMain, surfaceInputText);
+			}
+		}
+		for (int i = 0; i < strlen(mainBuffer.c_str()); i++) {
+			destInputText.x = 50;
+			destInputText.y = 50;
+			destInputText.w = 30 + (i * 32);
+			destInputText.h = 30;
+		}
+		SDL_SetRenderDrawColor(rendererMain, 0xFF, 0xFF, 0xFF, 0xFF);
+		SDL_RenderClear(rendererMain);
+		SDL_RenderCopy(rendererMain, textureInputText, NULL, &destInputText);
+		SDL_RenderPresent(rendererMain);
+	}
+}
