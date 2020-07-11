@@ -27,3 +27,10 @@ bool Text::inputText(const char* styleText) {
 	}
 	fontInput = TTF_OpenFont(styleText, 30);
 }
+
+void Text::saveText() {
+	std::ofstream save;
+	save.open("ourFile.txt");
+	save << mainBuffer;
+	save.close();
+}

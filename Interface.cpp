@@ -15,10 +15,11 @@ void Interface::displayMain() {
 	SDL_RenderFillRect(rendererMain, &rectMain);
 	SDL_RenderPresent(rendererMain);
 	inputText("preview.ttf");
+	//saveText();
+	std::cout << main;
 }
 
 void Interface::displayMenu() {
-	Color* color = new Color;
 	createWindow(windowMenu, "Menu", 0, 35, 360, 820);
 	createRenderer(windowMenu, rendererMenu);
 	SDL_SetRenderDrawColor(rendererMenu, 173, 216, 230, 255); // фон
@@ -30,16 +31,15 @@ void Interface::displayMenu() {
 		
 	}
 	outText(rendererMenu, "Insert", "sans.ttf", 100, color->azure, 50, 10);
-	outText(rendererMenu, "Copy", "sans.ttf", 100, color->azure, 50, 10);
-	outText(rendererMenu, "Cut", "sans.ttf", 100, color->azure, 50, 10);
-	outText(rendererMenu, "Save", "sans.ttf", 100, color->azure, 50, 10);
-	outText(rendererMenu, "Exit", "sans.ttf", 100, color->azure, 50, 10);
-	outText(rendererMenu, "About", "sans.ttf", 100, color->azure, 50, 10);
+	outText(rendererMenu, "Copy", "sans.ttf", 100, color->azure, 50, 150);
+	outText(rendererMenu, "Cut", "sans.ttf", 100, color->azure, 50, 290);
+	outText(rendererMenu, "Save", "sans.ttf", 100, color->azure, 50, 440);
+	outText(rendererMenu, "Exit", "sans.ttf", 100, color->azure, 50, 580);
+	outText(rendererMenu, "About", "sans.ttf", 100, color->azure, 50, 680);
 	SDL_RenderPresent(rendererMenu);
 }
 
 void Interface::displayPreview() {
-	Color* color = new Color;
 	createWindow(windowPreview, "Preview", 470, 285, 500, 250);
 	createRenderer(windowPreview, rendererPreview);
 	SDL_SetRenderDrawColor(rendererPreview, 255, 182, 193, 255); // фон
@@ -49,7 +49,7 @@ void Interface::displayPreview() {
 }
 
 void Interface::processingEvent() {
-	Color* color = new Color;
+	SDL_StartTextInput();
 	while (run) {
 		runText = false;
 		while (SDL_PollEvent(&event)) {
@@ -78,24 +78,26 @@ void Interface::processingEvent() {
 		}
 		if (runText) {
 			if (mainBuffer != "") {
-				surfaceInputText = TTF_RenderUTF8_Solid(fontInput, mainBuffer.c_str(), color->black);
+				surfaceInputText = TTF_RenderUTF8_Blended(fontInput, mainBuffer.c_str(), color->black);
 				textureInputText = SDL_CreateTextureFromSurface(rendererMain, surfaceInputText);
 			}
 			else { // ???
 				mainBuffer = " ";
-				surfaceInputText = TTF_RenderUTF8_Solid(fontInput, mainBuffer.c_str(), color->black);
+				surfaceInputText = TTF_RenderUTF8_Blended(fontInput, mainBuffer.c_str(), color->black);
 				textureInputText = SDL_CreateTextureFromSurface(rendererMain, surfaceInputText);
 			}
 		}
 		for (int i = 0; i < strlen(mainBuffer.c_str()); i++) {
+			int y = 50;
 			destInputText.x = 50;
-			destInputText.y = 50;
-			destInputText.w = 30 + (i * 32);
-			destInputText.h = 30;
+			destInputText.y = y;
+			destInputText.w = 25 + (i * 32);
+			destInputText.h = 25;
 		}
 		SDL_SetRenderDrawColor(rendererMain, 0xFF, 0xFF, 0xFF, 0xFF);
 		SDL_RenderClear(rendererMain);
 		SDL_RenderCopy(rendererMain, textureInputText, NULL, &destInputText);
 		SDL_RenderPresent(rendererMain);
 	}
+	SDL_StopTextInput();
 }

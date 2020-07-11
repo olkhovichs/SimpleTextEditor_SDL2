@@ -35,4 +35,5 @@ private:
 	SDL_Renderer* rendererPreview = nullptr;
 	SDL_Rect rectMain;
 	SDL_Rect rectMenu;
+	 Color* color = new Color;
 };

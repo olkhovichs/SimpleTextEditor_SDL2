@@ -9,9 +9,9 @@
 void startApplication() {
 	Interface* startInterface = new Interface;
 	ConnectionSDL* startConnect = new ConnectionSDL;
-	//startInterface->displayMenu();
+	startInterface->displayMenu();
 	startInterface->displayMain();
-	//startInterface->displayPreview();
+	startInterface->displayPreview();
 	startInterface->processingEvent();
 	delete startInterface;
 }
